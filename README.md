@@ -1,0 +1,2 @@
+# mcp-template
+MCP template
