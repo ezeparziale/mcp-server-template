@@ -1,15 +1,21 @@
 {
   "name": "mcp-template",
   "version": "1.0.0",
-  "description": "",
-  "keywords": [],
+  "description": "MCP template",
+  "keywords": [
+    "modelcontextprotocol",
+    "mcp",
+    "mcp-server",
+    "typescript"
+  ],
   "author": "",
-  "main": "src/server.ts",
+  "main": "./build/server.ts",
   "type": "module",
   "scripts": {
     "server:build": "tsc",
-    "server:build:watch": "tsc --watch",
-    "server:dev": "tsx src/server.ts",
+    "server:start": "cross-env NODE_ENV=production tsx build/server.js",
+    "server:build:watch": "cross-env NODE_ENV=development tsc --watch",
+    "server:dev": "cross-env NODE_ENV=development tsx src/server.ts",
     "server:inspect": "npx @modelcontextprotocol/inspector npm run server:dev",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
@@ -25,6 +31,7 @@
     "@eslint/js": "9.36.0",
     "@modelcontextprotocol/inspector": "0.16.8",
     "@types/node": "24.5.2",
+    "cross-env": "10.0.0",
     "eslint": "9.36.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-prettier": "5.5.4",
@@ -40,6 +47,9 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.18.1",
     "zod": "3.25.76"
+  },
+  "engines": {
+    "node": ">=22"
   },
   "packageManager": "pnpm@10.7.1"
 }
