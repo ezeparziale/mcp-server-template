@@ -1,7 +1,8 @@
-import { GeocodingSchema, WeatherSchema } from "@/schemas/weather"
-import type { McpTextResponse } from "@/types/types"
+import { GeocodingSchema, WeatherSchema } from "../schemas/weather.js"
+import type { McpTextResponse } from "../types/types.js"
 
 export async function getCurrentWeather(city: string): Promise<McpTextResponse> {
+  console.info(`Fetching weather data for ${city}`)
   const geocodingUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1&language=en&format=json`
 
   try {

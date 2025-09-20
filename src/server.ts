@@ -1,6 +1,6 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
-import { getCurrentWeatherTool } from "@/tools/weather"
+import { getCurrentWeatherTool } from "./tools/weather.js"
 
 const server = new McpServer({
   name: "mcp-template",
@@ -21,6 +21,9 @@ server.registerTool(
 async function main() {
   const transport = new StdioServerTransport()
   await server.connect(transport)
+  console.info("🚀 mcp server is running...")
 }
 
-main()
+main().catch((error) => {
+  console.error(`🔥 failed to start server: ${error}`)
+})

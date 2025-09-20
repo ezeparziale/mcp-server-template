@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { getCurrentWeather } from "@/lib/weather"
+import { getCurrentWeather } from "../lib/weather.js"
 
 const getCurrentWeatherInputSchema = z.object({
   city: z.string().describe("The city to get the weather for"),
