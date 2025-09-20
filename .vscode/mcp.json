@@ -1,0 +1,10 @@
+{
+  "servers": {
+    "my-local-mcp-server": {
+      "type": "stdio",
+      "command": "npm",
+      "args": ["run", "server:dev"]
+    }
+  },
+  "inputs": []
+}
