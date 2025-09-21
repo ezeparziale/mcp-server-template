@@ -2,12 +2,12 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
 import { logger } from "./logger.js"
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js"
-import { getCurrentWeatherTool } from "./tools/weather.js"
 import * as pjson from "../package.json" with { type: "json" }
 import express, { Express } from "express"
 import cors from "cors"
 import { randomUUID } from "node:crypto"
 import { isInitializeRequest } from "@modelcontextprotocol/sdk/types.js"
+import { tools } from "./tools/index.js"
 
 const STDIO_OPTION = "stdio"
 const STREAMABLE_HTTP_OPTION = "http"
@@ -17,6 +17,10 @@ const VERSION = pjson.version
 
 const PORT = process.env.PORT || 3000
 const ORIGIN = process.env.ORIGIN
+const ALLOWED_HOSTS = process.env.ALLOWED_HOSTS?.split(",") ?? [
+  "127.0.0.1",
+  "localhost",
+]
 
 export class MCPServer {
   private readonly server: McpServer
@@ -30,11 +34,10 @@ export class MCPServer {
       },
     })
 
-    this.server.registerTool(
-      getCurrentWeatherTool.name,
-      getCurrentWeatherTool,
-      getCurrentWeatherTool.execute,
-    )
+    tools.forEach((tool) => {
+      this.server.registerTool(tool.name, tool, tool.execute)
+      logger.info(`🔧 Tool registered: ${tool.name}`)
+    })
   }
 
   async run(transportType: string): Promise<void> {
@@ -48,9 +51,14 @@ export class MCPServer {
       case STREAMABLE_HTTP_OPTION: {
         const app = express()
         app.use(express.json())
+
+        const allowedOrigins =
+          ORIGIN?.split(",").map((o) => o.trim()) ??
+          (process.env.NODE_ENV === "production" ? [] : ["*"])
+
         app.use(
           cors({
-            origin: ORIGIN ? (ORIGIN.includes(",") ? ORIGIN.split(",") : ORIGIN) : "*",
+            origin: allowedOrigins,
             exposedHeaders: ["Mcp-Session-Id"],
             allowedHeaders: ["Content-Type", "mcp-session-id"],
           }),
@@ -86,8 +94,8 @@ export class MCPServer {
             transports[sessionId] = transport
             logger.info(`🆕 New MCP session created: ${sessionId}`)
           },
-          enableDnsRebindingProtection: false,
-          allowedHosts: ["127.0.0.1", "localhost"],
+          enableDnsRebindingProtection: process.env.NODE_ENV === "production",
+          allowedHosts: ALLOWED_HOSTS,
 
           // DNS rebinding protection is disabled by default for backwards compatibility. If you are running this server
           // locally, make sure to set:
