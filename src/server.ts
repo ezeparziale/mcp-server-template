@@ -17,10 +17,6 @@ const VERSION = pjson.version
 
 const PORT = process.env.PORT || 3000
 const ORIGIN = process.env.ORIGIN
-const ALLOWED_HOSTS = process.env.ALLOWED_HOSTS?.split(",") ?? [
-  "127.0.0.1",
-  "localhost",
-]
 
 export class MCPServer {
   private readonly server: McpServer
@@ -94,8 +90,6 @@ export class MCPServer {
             transports[sessionId] = transport
             logger.info(`🆕 New MCP session created: ${sessionId}`)
           },
-          enableDnsRebindingProtection: process.env.NODE_ENV === "production",
-          allowedHosts: ALLOWED_HOSTS,
 
           // DNS rebinding protection is disabled by default for backwards compatibility. If you are running this server
           // locally, make sure to set:
