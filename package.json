@@ -19,6 +19,7 @@
     "server:remote:dev": "cross-env NODE_ENV=development tsx src/server-remote.ts",
     "server:inspect": "npx @modelcontextprotocol/inspector npm run server:dev",
     "server:remote:inspect": "npx @modelcontextprotocol/inspector npm run server:remote:dev",
+    "inspector": "npx @modelcontextprotocol/inspector",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "format:check": "prettier --check .",
