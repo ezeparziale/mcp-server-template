@@ -1,4 +1,4 @@
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
+import { McpServer as Server } from "@modelcontextprotocol/sdk/server/mcp.js"
 import { logger } from "./logger.js"
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js"
@@ -19,10 +19,10 @@ const PORT = process.env.PORT || 3000
 const ORIGIN = process.env.ORIGIN
 
 export class MCPServer {
-  private readonly server: McpServer
+  private readonly server: Server
 
   constructor() {
-    this.server = new McpServer({
+    this.server = new Server({
       name: NAME,
       version: VERSION,
       capabilities: {
