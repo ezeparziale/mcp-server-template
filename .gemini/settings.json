@@ -1,8 +1,11 @@
 {
   "mcpServers": {
-    "local": {
-      "command": "npm",
-      "args": ["run", "server:dev"]
+    // "local": {
+    //   "command": "npm",
+    //   "args": ["run", "server:dev"]
+    // }
+    "remote-internal": {
+      "httpUrl": "http://127.0.0.1:3000/mcp"
     }
   }
 }
