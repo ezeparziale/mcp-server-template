@@ -1,0 +1,10 @@
+services:
+  mcp-server-template:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: mcp-server-template
+    ports:
+      - "8080:8080"
+    stdin_open: true
+    tty: true
