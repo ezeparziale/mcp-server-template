@@ -1,8 +1,9 @@
 services:
   mcp-server-template:
-    build:
-      context: .
-      dockerfile: Dockerfile.remote
-    image: mcp-server-template
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile.remote
+    # image: mcp-server-template
+    image: ezeparziale/mcp-server-template
     ports:
       - 3000:3000
