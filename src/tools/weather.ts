@@ -8,7 +8,7 @@ const getCurrentWeatherInputSchema = z.object({
 type GetCurrentWeatherInput = z.infer<typeof getCurrentWeatherInputSchema>
 
 export const getCurrentWeatherTool = {
-  name: "get-current-weather",
+  name: "get_current_weather",
   description: "Get the current weather in a given location",
   inputSchema: getCurrentWeatherInputSchema.shape,
   execute: async ({ city }: GetCurrentWeatherInput) => {
