@@ -106,6 +106,10 @@ app.get("/mcp", handleSessionRequest)
 // Handle DELETE requests for session termination
 app.delete("/mcp", handleSessionRequest)
 
+app.get("/health", (_req, res) => {
+  res.status(200).send("OK")
+})
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://0.0.0.0:${PORT}`)
 })
