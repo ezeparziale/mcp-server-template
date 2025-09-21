@@ -1,1 +1,3 @@
-export type McpTextResponse = { content: { type: "text"; text: string }[] }
+export type McpToolTextResponse = {
+  content: { type: "text"; text: string }[]
+}

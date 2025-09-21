@@ -1,7 +1,7 @@
 import { GeocodingSchema, WeatherSchema } from "../schemas/weather.js"
-import type { McpTextResponse } from "../types/types.js"
+import type { McpToolTextResponse } from "../types/types.js"
 
-export async function getCurrentWeather(city: string): Promise<McpTextResponse> {
+export async function getCurrentWeather(city: string): Promise<McpToolTextResponse> {
   console.info(`Fetching weather data for ${city}`)
   const geocodingUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1&language=en&format=json`
 
@@ -51,7 +51,9 @@ export async function getCurrentWeather(city: string): Promise<McpTextResponse> 
     const parsedWeatherData = WeatherSchema.safeParse(weatherData)
 
     if (!parsedWeatherData.success) {
-      return { content: [{ type: "text", text: "Invalid weather data." }] }
+      return {
+        content: [{ type: "text", text: "Invalid weather data." }],
+      }
     }
 
     return {
@@ -70,9 +72,12 @@ export async function getCurrentWeather(city: string): Promise<McpTextResponse> 
       ],
     }
   } catch (error) {
+    console.error("Error fetching weather data:", error)
     if (error instanceof Error) {
       return { content: [{ type: "text", text: error.message }] }
     }
-    return { content: [{ type: "text", text: "An unknown error occurred." }] }
+    return {
+      content: [{ type: "text", text: "An unknown error occurred." }],
+    }
   }
 }
