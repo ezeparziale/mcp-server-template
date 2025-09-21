@@ -2,9 +2,7 @@ services:
   mcp-server-template:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.remote
     image: mcp-server-template
     ports:
-      - "8080:8080"
-    stdin_open: true
-    tty: true
+      - 3000:3000
