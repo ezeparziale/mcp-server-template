@@ -70,7 +70,7 @@ app.post("/mcp", async (req, res) => {
 
     // Connect to the MCP server
     await server.connect(transport)
-    console.info("🚀 MCP Server is running...")
+    console.log("🚀 MCP Server is running...")
   } else {
     // Invalid request
     res.status(400).json({

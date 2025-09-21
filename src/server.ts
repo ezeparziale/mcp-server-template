@@ -25,8 +25,8 @@ server.registerTool(
 async function main() {
   const transport = new StdioServerTransport()
   await server.connect(transport)
-  console.info("🚀 MCP Server is running...")
-  console.info(`Version: ${VERSION}`)
+  console.log("🚀 MCP Server is running...")
+  console.log(`Version: ${VERSION}`)
 }
 
 main().catch((error) => {
