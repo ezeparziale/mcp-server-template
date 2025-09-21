@@ -1,3 +1,4 @@
+import dotenv from "dotenv"
 import express from "express"
 import { randomUUID } from "node:crypto"
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
@@ -6,14 +7,16 @@ import { isInitializeRequest } from "@modelcontextprotocol/sdk/types.js"
 import { getCurrentWeatherTool } from "./tools/weather.js"
 import cors from "cors"
 
+dotenv.config()
+
 const PORT = process.env.PORT || 3000
+const ORIGIN = process.env.ORIGIN
 
 const app = express()
 app.use(express.json())
 app.use(
   cors({
-    origin: "*", // Configure appropriately for production, for example:
-    // origin: ['https://your-remote-domain.com', 'https://your-other-remote-domain.com'],
+    origin: ORIGIN ? (ORIGIN.includes(",") ? ORIGIN.split(",") : ORIGIN) : "*",
     exposedHeaders: ["Mcp-Session-Id"],
     allowedHeaders: ["Content-Type", "mcp-session-id"],
   }),
