@@ -30,4 +30,4 @@ USER appuser
 
 ENV NODE_ENV=production
 
-CMD ["node", "./build/server.js"]
+CMD ["node", "./build/index.js"]
