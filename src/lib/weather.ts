@@ -1,8 +1,9 @@
+import { logger } from "../logger.js"
 import { GeocodingSchema, WeatherSchema } from "../schemas/weather.js"
 import type { McpToolTextResponse } from "../types/types.js"
 
 export async function getCurrentWeather(city: string): Promise<McpToolTextResponse> {
-  console.info(`Fetching weather data for ${city}`)
+  logger.info(`Fetching weather data for ${city}`)
   const geocodingUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1&language=en&format=json`
 
   try {
@@ -72,7 +73,7 @@ export async function getCurrentWeather(city: string): Promise<McpToolTextRespon
       ],
     }
   } catch (error) {
-    console.error("Error fetching weather data:", error)
+    logger.error("Error fetching weather data:", error)
     if (error instanceof Error) {
       return { content: [{ type: "text", text: error.message }] }
     }

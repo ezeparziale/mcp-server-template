@@ -6,6 +6,7 @@ import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/
 import { isInitializeRequest } from "@modelcontextprotocol/sdk/types.js"
 import { getCurrentWeatherTool } from "./tools/weather.js"
 import cors from "cors"
+import { logger } from "./logger.js"
 
 dotenv.config()
 
@@ -70,7 +71,7 @@ app.post("/mcp", async (req, res) => {
 
     // Connect to the MCP server
     await server.connect(transport)
-    console.log("🚀 MCP Server is running...")
+    logger.info("🚀 MCP Server is running...")
   } else {
     // Invalid request
     res.status(400).json({
@@ -111,5 +112,5 @@ app.get("/health", (_req, res) => {
 })
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://0.0.0.0:${PORT}`)
+  logger.info(`Server is running on http://0.0.0.0:${PORT}`)
 })

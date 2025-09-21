@@ -3,6 +3,7 @@ import * as pjson from "../package.json" with { type: "json" }
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { getCurrentWeatherTool } from "./tools/weather.js"
+import { logger } from "./logger"
 
 const VERSION = pjson.version
 
@@ -25,10 +26,11 @@ server.registerTool(
 async function main() {
   const transport = new StdioServerTransport()
   await server.connect(transport)
-  console.log("🚀 MCP Server is running...")
-  console.log(`Version: ${VERSION}`)
+  logger.info("🚀 MCP Server is running...")
+  logger.info(`Version: ${VERSION}`)
 }
 
 main().catch((error) => {
-  console.error(`🚨 failed to start server: ${error}`)
+  logger.error(`🚨 failed to start server: ${error}`)
+  process.exit(1)
 })
